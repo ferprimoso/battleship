@@ -5,6 +5,18 @@ const player1box = document.querySelector('#player1-box')
 const player2box = document.querySelector('#player2-box')
 const clickHandler = (e) => cellClicked(e.target);
 
+export function startGameboard() {
+    const player1Header = document.createElement('h1')
+    const player2Header = document.createElement('h1')
+    player1Header.textContent = "Player 1"
+    player2Header.textContent = "Player 2"
+    player1box.appendChild(player1Header)
+    player2box.appendChild(player2Header)
+
+
+    player1box.appendChild(generateGameboard())
+    player2box.appendChild(generateGameboard())
+}
 
 export function generateGameboard() {
     const gridContainer = document.createElement("div")
@@ -28,13 +40,12 @@ export function generateGameboard() {
     return gridContainer
 }
 
-export function fillGameboard(playerBox, board) {
-    console.log(playerBox)
+export function fillGameboard(board) {
 
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
             if (board[i][j] !== undefined &&  board[i][j] !== 'M') {
-                let child = playerBox.children[(i * 10) + j]
+                let child = player1box.lastChild.children[(i * 10) + j]
                 child.classList.add("is-ship")
             }
         }
@@ -53,14 +64,12 @@ export function updateBoard(boxN, coord, cellContent) {
     else cellToUpdate.classList.add('is-hitted')
 
     cellToUpdate.removeEventListener('click', clickHandler);
+
+    // check if ships sink
+    if (cellContent.sunk === true) {
+        console.log(cellContent)
+    }
 }
-
-
-
-
-
-
-
 
 let turnState = 0
 
@@ -79,4 +88,10 @@ export function updateTurn() {
         turnState = 0
     }
 
+}
+
+
+export function gameOverScreen(playerN) {
+    const h1 = document.querySelector('.current-turn')
+    h1.textContent = "Game Over " + "Player " + playerN + " Wins!" 
 }
