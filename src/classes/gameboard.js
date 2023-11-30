@@ -13,7 +13,6 @@ export default class Gameboard {
     //check if no axi is specified to generate random axi
     if (mainAxis === undefined) {
       Math.floor(Math.random() * 2) == 0 ? mainAxis = 'y' : mainAxis = 'x'
-      console.log(mainAxis);
     }
 
     let yAxis =   Math.floor(Math.random() * 10)
@@ -23,10 +22,20 @@ export default class Gameboard {
     
     if(mainAxis === 'y') {
       while(shipPlaced === false) {
-        xAxis = Math.floor(Math.random() * (10 - ship.length))
+
+        do { 
+          xAxis = Math.floor(Math.random() * (10 - ship.length))
+        } while(xAxis > 0 && this.board[yAxis][xAxis - 1] !== undefined) //check if there is a ship behind
 
         for (let i = 0; i < ship.length; i++) {
-          if (this.board[yAxis][xAxis + i] === undefined) {
+
+          //check sides
+
+          if (this.board[yAxis][xAxis + i] === undefined 
+            && this.board[yAxis][xAxis + i + 1] === undefined
+            && (yAxis > 0 && this.board[yAxis - 1][xAxis + i] === undefined )
+            && (yAxis < 7 && this.board[yAxis + 1][xAxis + i] === undefined )
+            ) {
             shipCoords.push(yAxis + ',' + (xAxis + i))
             shipPlaced = true
           } else {
@@ -42,10 +51,18 @@ export default class Gameboard {
 
     if(mainAxis ==='x') {
       while(shipPlaced === false) {
-        yAxis = Math.floor(Math.random() * (10 - ship.length))
+
+        do { 
+          yAxis = Math.floor(Math.random() * (10 - ship.length))
+        } while(yAxis > 0 && this.board[yAxis - 1][xAxis] !== undefined) //check if there is a ship behind
+
 
         for (let i = 0; i < ship.length; i++) {
-          if (this.board[yAxis + i][xAxis] === undefined) {
+          if (this.board[yAxis + i][xAxis] === undefined 
+            && this.board[yAxis + i + 1][xAxis] === undefined 
+            && (xAxis > 0 && this.board[yAxis + i][xAxis - 1] === undefined )
+            && (xAxis < 7 && this.board[yAxis + i][xAxis + 1] === undefined )
+            ) {
             shipCoords.push((yAxis + i) + ',' + xAxis + i)
             shipPlaced = true
           } else {
@@ -64,7 +81,6 @@ export default class Gameboard {
     }
 
     this.shipsPlaced.push(ship)
-
   }
 
 
@@ -74,8 +90,6 @@ export default class Gameboard {
     this.placeShip(new Ship(3))
     this.placeShip(new Ship(3))
     this.placeShip(new Ship(2))
-
-    console.log(this.board)
   }
 
   // placeShips() {
