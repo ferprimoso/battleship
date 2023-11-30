@@ -1,5 +1,5 @@
 import Player from './classes/player'
-import { generateGameboard, fillGameboard, updateTurn, updateBoard, gameOverScreen, startGameboard } from './domModule';
+import { fillGameboard, updateTurn, updateBoard, gameOverScreen, startGameboard } from './domModule';
 
 
 const player1 = new Player()
@@ -46,11 +46,7 @@ export function endGame(playerN) {
 }
 
 export function startGame() {
-
     startGameboard()
     fillGameboard(player1.gameboard.board)
     updateTurn();
-
-    
-    
 }

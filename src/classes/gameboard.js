@@ -7,36 +7,108 @@ export default class Gameboard {
     this.placeShips()
   }
 
-  placeShips() {
-    const ship = new Ship(5)
-    this.board[0][4] = ship
-    this.board[0][5] = ship
-    this.board[0][6] = ship
-    this.board[0][7] = ship
-    this.board[0][8] = ship
 
-    const ship2 = new Ship(4)
-    this.board[2][1] = ship2
-    this.board[2][2] = ship2
-    this.board[2][3] = ship2
-    this.board[2][4] = ship2
+  placeShip(ship, mainAxis) {
+   
+    //check if no axi is specified to generate random axi
+    if (mainAxis === undefined) {
+      Math.floor(Math.random() * 2) == 0 ? mainAxis = 'y' : mainAxis = 'x'
+      console.log(mainAxis);
+    }
 
-    const ship3 = new Ship(3)
-    this.board[6][3] = ship3
-    this.board[7][3] = ship3
-    this.board[8][3] = ship3
+    let yAxis =   Math.floor(Math.random() * 10)
+    let xAxis =   Math.floor(Math.random() * 10)
+    let shipPlaced = false
+    let shipCoords = []
+    
+    if(mainAxis === 'y') {
+      while(shipPlaced === false) {
+        xAxis = Math.floor(Math.random() * (10 - ship.length))
 
-    const ship4 = new Ship(2)
-    this.board[7][7] = ship4
-    this.board[8][7] = ship4
+        for (let i = 0; i < ship.length; i++) {
+          if (this.board[yAxis][xAxis + i] === undefined) {
+            shipCoords.push(yAxis + ',' + (xAxis + i))
+            shipPlaced = true
+          } else {
+            shipPlaced = false
+            shipCoords = []
+            break
+          }
+        }
 
-    const ship5 = new Ship(3)
-    this.board[4][5] = ship5
-    this.board[4][6] = ship5
-    this.board[4][7] = ship5
+      yAxis = Math.floor(Math.random() * 10)
+      }
+    }
 
-    this.shipsPlaced.push(ship, ship2, ship3, ship4, ship5)
+    if(mainAxis ==='x') {
+      while(shipPlaced === false) {
+        yAxis = Math.floor(Math.random() * (10 - ship.length))
+
+        for (let i = 0; i < ship.length; i++) {
+          if (this.board[yAxis + i][xAxis] === undefined) {
+            shipCoords.push((yAxis + i) + ',' + xAxis + i)
+            shipPlaced = true
+          } else {
+            shipPlaced = false
+            shipCoords = []
+            break
+          }
+        }
+
+      xAxis = Math.floor(Math.random() * 10)
+      }
+    }
+
+    for (let i = 0; i < shipCoords.length; i++) {
+      this.board[shipCoords[i][0]][shipCoords[i][2]] = ship
+    }
+
+    this.shipsPlaced.push(ship)
+
   }
+
+
+  placeShips() {
+    this.placeShip(new Ship(5))
+    this.placeShip(new Ship(4))
+    this.placeShip(new Ship(3))
+    this.placeShip(new Ship(3))
+    this.placeShip(new Ship(2))
+
+    console.log(this.board)
+  }
+
+  // placeShips() {
+  //   const ship = new Ship(5)
+  //   this.board[0][4] = ship
+  //   this.board[0][5] = ship
+  //   this.board[0][6] = ship
+  //   this.board[0][7] = ship
+  //   this.board[0][8] = ship
+
+  //   const ship2 = new Ship(4)
+  //   this.board[2][1] = ship2
+  //   this.board[2][2] = ship2
+  //   this.board[2][3] = ship2
+  //   this.board[2][4] = ship2
+
+  //   const ship3 = new Ship(3)
+  //   this.board[6][3] = ship3
+  //   this.board[7][3] = ship3
+  //   this.board[8][3] = ship3
+
+  //   const ship4 = new Ship(2)
+  //   this.board[7][7] = ship4
+  //   this.board[8][7] = ship4
+
+  //   const ship5 = new Ship(3)
+  //   this.board[4][5] = ship5
+  //   this.board[4][6] = ship5
+  //   this.board[4][7] = ship5
+
+  //   this.shipsPlaced.push(ship, ship2, ship3, ship4, ship5)
+  // }
+
 
   receiveAttack(coordinates) {
     //check if hits ship

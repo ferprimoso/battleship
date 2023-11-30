@@ -9,7 +9,7 @@ export function startGameboard() {
     const player1Header = document.createElement('h1')
     const player2Header = document.createElement('h1')
     player1Header.textContent = "Player 1"
-    player2Header.textContent = "Player 2"
+    player2Header.textContent = "Computer"
     player1box.appendChild(player1Header)
     player2box.appendChild(player2Header)
 
@@ -82,7 +82,7 @@ export function updateTurn() {
         player2box.classList.remove('active-player')
         turnState = 1
     } else {
-        h1.textContent = 'Player 2 turn'
+        h1.textContent = 'Computer turn'
         player2box.classList.add('active-player')
         player1box.classList.remove('active-player')
         turnState = 0
