@@ -60,8 +60,14 @@ export function updateBoard(boxN, coord, cellContent) {
 
     let cellToUpdate = boxToUpdate.children[parseInt(coord[0]) * 10 + parseInt(coord[2])]
 
-    if (cellContent === 'M') cellToUpdate.classList.add('is-missed')
-    else cellToUpdate.classList.add('is-hitted')
+    if (cellContent === 'M') {
+        cellToUpdate.classList.add('is-missed')
+        cellToUpdate.textContent = '-'
+    }
+    else {
+        cellToUpdate.classList.add('is-hitted')
+        cellToUpdate.textContent = 'x'
+    }
 
     cellToUpdate.removeEventListener('click', clickHandler);
 
@@ -94,4 +100,19 @@ export function updateTurn() {
 export function gameOverScreen(playerN) {
     const h1 = document.querySelector('.current-turn')
     h1.textContent = "Game Over " + "Player " + playerN + " Wins!" 
+}
+
+
+//computer logic 
+
+export function clickOnPlayerRandomCell() {
+    let yAxis =   Math.floor(Math.random() * 10)
+    let xAxis =   Math.floor(Math.random() * 10)
+
+
+    const player1Box = player1box.lastChild
+    const randomCell = player1Box.children[(yAxis * 10 )+ xAxis]
+
+    if (randomCell.classList.contains('is-missed') || randomCell.classList.contains('is-hitted')) clickOnPlayerRandomCell()
+    randomCell.click()
 }

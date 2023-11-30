@@ -1,5 +1,5 @@
 import Player from './classes/player'
-import { fillGameboard, updateTurn, updateBoard, gameOverScreen, startGameboard } from './domModule';
+import { fillGameboard, updateTurn, updateBoard, gameOverScreen, startGameboard, clickOnPlayerRandomCell } from './domModule';
 
 
 const player1 = new Player()
@@ -21,6 +21,7 @@ export function cellClicked(cell) {
         if(cellContent === 'M') {
             updateTurn()
             currentPlayer = 2
+            computerTurn()
          }
 
          if (player2.gameboard.checkIsAllSinked()) endGame(1)
@@ -35,9 +36,19 @@ export function cellClicked(cell) {
          }
 
          if (player1.gameboard.checkIsAllSinked()) endGame(2)
-
+         else computerTurn()
     }
 }
+
+export function computerTurn() {
+    setTimeout(function() {
+        clickOnPlayerRandomCell()
+        console.log("Waited for 3 seconds");
+    }, 1000);
+}
+
+
+
 
 export function endGame(playerN) {
     gameOver = true

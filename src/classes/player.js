@@ -8,7 +8,6 @@ export default class Player {
 
   takeTurn(player, coordinates) {
     //check if coordinate was already hitted
-
     if (this.hittedCoordinates.includes(coordinates)) {
       return 'Invalid coordinate'
     }

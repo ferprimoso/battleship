@@ -1,18 +1,23 @@
-$primary-color: #3498db;
-$secondary-color: #2ecc71;
+$primary-color: #18181B;
+$secondary-color: #0E0E10;
+$font-color: #f0f0f0;
 $font-family: 'Arial', sans-serif;
 
 body {
     font-family: $font-family;
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: $secondary-color;
+    color: $font-color;
 }
 
 header {
+    text-align: center;
     margin: 0 auto;
-    background-color: $primary-color;
-    color: #fff;
+    color: $font-color;
     padding: 1em;
+
+    .container {
+        max-width: 1000px;
+    }
 }
 
 
@@ -28,24 +33,22 @@ header {
 .game-screen {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .player {
+    background-color: $primary-color;
     margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 500px;
     height: 500px;
-    background-color: white;
-    border: 2px solid black;
 }
 
-.active-player {
-    background-color: $secondary-color;
-}
+.active-player {}
 
 .score-screen {
     display: flex;
@@ -55,37 +58,46 @@ header {
     margin: auto;
     margin-top: 20px;
     height: 200px;
-    border: 2px solid black;
-    border-radius: 20px;
+    border-radius: 20px 20px;
+    max-width: 500px;
+    background-color: $primary-color;
+    color: $font-color;
+    font-weight: bold;
+    font-size: 24px;
 }
 
 // Game Grid Logic
 
 .game-grid {
     display: grid;
-    width: 300px;
-    height: 300px;
-    grid-template-columns: repeat(10, 30px);
-    grid-template-rows: repeat(10, 30px);
+    width: 400px;
+    height: 400px;
+    grid-template-columns: repeat(10, 40px);
+    grid-template-rows: repeat(10, 40px);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    border: 1px solid black;
 }
 
 .game-cell {
     cursor: pointer;
-    background-color: white;
-    border: 1px solid lightgrey;
+
+    font-size: 26px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #1F1F25;
+    border-radius: 5px;
 }
 
 .is-ship {
-    background-color: #333;
+    background-color: #606068;
 }
 
 .is-hitted {
-    background-color: red;
+    background-color: #f16976;
 }
 
 .is-missed {
-    background-color: greenyellow;
+    background-color: #8fb9a8;
 }
