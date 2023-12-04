@@ -17,7 +17,7 @@ test('Test if receive attack display M ( Miss) if attack is received in empty co
   expect(gameboard.board[4][9]).toBe('M')
 })
 
-test.only('Test if receive attack increases the hitcount of the ship hitted', () => {
+test('Test if receive attack increases the hitcount of the ship hitted', () => {
   const gameboard = new Gameboard()
   gameboard.shipsPlaced[0].
   gameboard.receiveAttack([7, 7])

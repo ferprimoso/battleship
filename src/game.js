@@ -78,7 +78,7 @@ export function computerTurn(cellStack = []) {
                 const temp = clickOnPlayerShipCells(cellStack)
 
 
-                if(temp.classList.contains('is-hitted')) {
+                if(temp && temp.classList.contains('is-hitted')) {
                     // //reset if ship sunk
                     if (currentShipSunk) {
                         currentShipSunk = false
@@ -95,7 +95,7 @@ export function computerTurn(cellStack = []) {
                 }
             }
 
-        }, 500);
+        }, 1000);
     })
 }
 

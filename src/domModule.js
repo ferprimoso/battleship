@@ -99,12 +99,10 @@ export function updateTurn() {
 
 export function gameOverScreen(playerN) {
     const h1 = document.querySelector('.current-turn')
-    const span = document.createElement('span')
+    const h2 = document.querySelector('.winner')
 
     h1.textContent = "Game Over " 
-    span.textContent = playerN == 2? 'Computer' : 'Player 1 ' + ' wins!' 
-
-    h1.appendChild(h2)
+    h2.textContent = playerN == 2? 'Computer Wins' : 'Player 1 Wins' 
 }
 
 
@@ -160,6 +158,7 @@ export function clickOnPlayerShipCells(cellStack) {
                 return cell.previousSibling
             } 
 
+            cardinalSet.add(2)
         }
 
         // try top
@@ -172,7 +171,8 @@ export function clickOnPlayerShipCells(cellStack) {
                 topCellNode.click()
                 return topCellNode
             }
-            
+
+            cardinalSet.add(3)
         }
 
         //try right
@@ -182,22 +182,21 @@ export function clickOnPlayerShipCells(cellStack) {
                 return cell.nextSibling
             } 
 
+            cardinalSet.add(0)
         }
 
         //try bottom
         else if (cardinal === 3) {
-
-
                 const parentNode = cell.parentNode
                 const bottomCellIndex = parseInt(cell.getAttribute("coord")[0] + cell.getAttribute("coord")[2]) + 10
                 const bottomCellNode = parentNode.childNodes[bottomCellIndex] 
-
-
 
                 if( bottomCellNode !== undefined && !bottomCellNode.classList.contains('is-missed') && !bottomCellNode.classList.contains('is-hitted') ) {
                     bottomCellNode.click()
                     return bottomCellNode
                 }
+
+                cardinalSet.add(1)
         }
 
     }
