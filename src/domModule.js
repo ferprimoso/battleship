@@ -99,7 +99,12 @@ export function updateTurn() {
 
 export function gameOverScreen(playerN) {
     const h1 = document.querySelector('.current-turn')
-    h1.textContent = "Game Over " + "Player " + playerN + " Wins!" 
+    const span = document.createElement('span')
+
+    h1.textContent = "Game Over " 
+    span.textContent = playerN == 2? 'Computer' : 'Player 1 ' + ' wins!' 
+
+    h1.appendChild(h2)
 }
 
 
@@ -113,6 +118,89 @@ export function clickOnPlayerRandomCell() {
     const player1Box = player1box.lastChild
     const randomCell = player1Box.children[(yAxis * 10 )+ xAxis]
 
-    if (randomCell.classList.contains('is-missed') || randomCell.classList.contains('is-hitted')) clickOnPlayerRandomCell()
-    randomCell.click()
+    if (randomCell.classList.contains('is-missed') || randomCell.classList.contains('is-hitted')) {
+        return clickOnPlayerRandomCell()
+    } else {
+        randomCell.click()
+        return randomCell
+    }
+}
+
+export function clickOnPlayerShipCells(cellStack) {
+
+    let cardinalSet = new Set()
+
+    if(cellStack.length > 1) {
+        let yFactor = parseInt(cellStack[0].getAttribute('coord')[0]) - parseInt(cellStack[1].getAttribute('coord')[0])
+        let xFactor = parseInt(cellStack[0].getAttribute('coord')[2]) - parseInt(cellStack[1].getAttribute('coord')[2])
+
+        if(yFactor === -1) cardinalSet.add(3)
+        if(yFactor ===  1) cardinalSet.add(1)
+        if(xFactor === -1) cardinalSet.add(2)
+        if(xFactor ===  1) cardinalSet.add(0)
+
+    } else {
+        while(cardinalSet.size < 4) {
+            cardinalSet.add(Math.floor(Math.random() * 4))
+        }
+    }
+
+    //click on last cell
+    let cell = cellStack[cellStack.length - 1]
+
+    for(const cardinal of cardinalSet){
+
+        // if 0 try left, if 1 try top, if 2 try right, if 3 try bottom
+        console.log('looping', cardinal);
+
+        // try left
+        if (cardinal === 0) {
+            if (cell.getAttribute('coord')[2] !== 0 && cell.previousSibling != undefined && !cell.previousSibling.classList.contains('is-missed') && !cell.previousSibling.classList.contains('is-hitted')) {
+                cell.previousSibling.click()
+                return cell.previousSibling
+            } 
+
+        }
+
+        // try top
+        else if (cardinal === 1) {
+            const parentNode = cell.parentNode
+            const topCellIndex = parseInt(cell.getAttribute("coord")[0] + cell.getAttribute("coord")[2]) - 10
+            const topCellNode = parentNode.childNodes[topCellIndex] 
+
+            if( topCellNode !== undefined && !topCellNode.classList.contains('is-missed') && !topCellNode.classList.contains('is-hitted')) {
+                topCellNode.click()
+                return topCellNode
+            }
+            
+        }
+
+        //try right
+        else if (cardinal === 2) {
+            if (cell.getAttribute('coord')[2] !== 9 && cell.nextSibling != undefined && !cell.nextSibling.classList.contains('is-missed') && !cell.nextSibling.classList.contains('is-hitted')) {
+                cell.nextSibling.click()
+                return cell.nextSibling
+            } 
+
+        }
+
+        //try bottom
+        else if (cardinal === 3) {
+
+
+                const parentNode = cell.parentNode
+                const bottomCellIndex = parseInt(cell.getAttribute("coord")[0] + cell.getAttribute("coord")[2]) + 10
+                const bottomCellNode = parentNode.childNodes[bottomCellIndex] 
+
+
+
+                if( bottomCellNode !== undefined && !bottomCellNode.classList.contains('is-missed') && !bottomCellNode.classList.contains('is-hitted') ) {
+                    bottomCellNode.click()
+                    return bottomCellNode
+                }
+        }
+
+    }
+
+    return null
 }

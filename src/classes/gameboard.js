@@ -89,8 +89,6 @@ export default class Gameboard {
     this.placeShip(new Ship(3))
     this.placeShip(new Ship(3))
     this.placeShip(new Ship(2))
-
-    console.log(this.board)
   }
 
   // placeShips() {
@@ -129,10 +127,6 @@ export default class Gameboard {
     //check if hits ship
     if (this.board[coordinates[0]][coordinates[1]] instanceof Ship) {
       this.board[coordinates[0]][coordinates[1]].hit()
-
-      if(this.board[coordinates[0]][coordinates[1]].sunk) {
-        console.log('hihihi')
-      }
     }
 
     //check if hits water

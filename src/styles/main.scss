@@ -46,9 +46,13 @@ header {
     align-items: center;
     width: 500px;
     height: 500px;
+
+    transition: 500ms;
 }
 
-.active-player {}
+.active-player {
+    opacity: 50%;
+}
 
 .score-screen {
     display: flex;
